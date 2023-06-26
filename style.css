@@ -1,0 +1,28 @@
+//{
+    display: flex;
+    border: 0px;
+    margin: 0px;
+    background-color: pink;
+}
+
+input{
+    border-width: 40px;
+    color: aqua;
+    padding: 10px;
+    margin: 20px;
+    border-color: blue;
+}
+form{
+    color:blue;
+    border-radius: 60px;
+    border-color: blue;
+    background-color: aqua;
+    font-size: medium;
+}
+button{
+    color: red;
+    border-color: brown;
+    border-width: 20px;
+    padding: 59px;
+    background-color: blue;
+}

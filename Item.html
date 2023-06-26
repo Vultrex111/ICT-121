@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Movies Watched</title>
+  <body>
+  </body>
+  <style>
+    body {
+      background-image: url('./vlcsnap-2023-06-14-12h41m03s961.png');
+      background-size: auto;
+      background-repeat: repeat;
+      margin: 0;
+      padding: 20px;
+      font-family: Arial, sans-serif;
+    }
+
+    h1 {
+      color: #10afdf;
+      text-align: center;
+      font-family: Georgia, 'Times New Roman', Times, serif;
+    }
+
+    .container {
+      max-width: 400px;
+      margin: 0 auto;
+      background-color: rgba(255, 255, 255, 0.8);
+      padding: 20px;
+      border-radius: 5px;
+    }
+
+    input[type="text"] {
+      width: 90%;
+      padding: 9px;
+      margin-bottom: 10px;
+      border: none;
+      border-radius: 5px;
+    }
+
+    input:hover{
+      color: rgb(23, 0, 128);
+      background-color: rgb(145, 255, 0);
+      transition-duration: 1.5s;
+    }
+
+    button {
+      background-color: #4CAF50;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+    button:hover{
+      color: black;
+      background-color: aqua;
+      transition-duration: 1s;
+    }
+
+    ul {
+      list-style-type: none;
+      padding: 0;
+    }
+
+    li {
+      display: flex;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .delete-button {
+      margin-left: 10px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Movies Watched</h1>
+    <input type="text" id="itemInput" placeholder="Enter an item">
+    <button onclick="addItem()">Add</button>
+    <ul id="itemList"></ul>
+  </div>
+
+  <script>
+    // Load stored items from local storage
+    window.addEventListener('DOMContentLoaded', function() {
+      var storedItems = localStorage.getItem('items');
+      if (storedItems) {
+        var items = JSON.parse(storedItems);
+        items.forEach(function(item) {
+          createListItem(item);
+        });
+      }
+    });
+
+    function addItem() {
+      var input = document.getElementById('itemInput');
+      var item = input.value;
+      input.value = '';
+
+      createListItem(item);
+      saveItems();
+    }
+
+    function createListItem(item) {
+      var list = document.getElementById('itemList');
+      var listItem = document.createElement('li');
+      listItem.textContent = item;
+      listItem.addEventListener('click', function() {
+        listItem.parentNode.removeChild(listItem);
+        saveItems();
+      });
+
+      var deleteButton = document.createElement('span');
+      deleteButton.className = 'delete-button';
+      deleteButton.textContent = '❌';
+      deleteButton.addEventListener('click', function(event) {
+        event.stopPropagation();
+        listItem.parentNode.removeChild(listItem);
+        saveItems();
+      });
+
+      listItem.appendChild(deleteButton);
+      list.appendChild(listItem);
+    }
+
+    function saveItems() {
+      var listItems = document.querySelectorAll('#itemList li');
+      var items = Array.from(listItems).map(function(item) {
+        return item.textContent;
+      });
+      localStorage.setItem('items', JSON.stringify(items));
+    }
+
+    document.getElementById('itemInput').addEventListener('keyup', function(event) {
+      if (event.keyCode === 13) {
+        addItem();
+      }
+    });
+  </script>
+</body>
+</html>
